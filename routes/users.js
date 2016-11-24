@@ -1,9 +1,18 @@
 var express = require('express');
 var router = express.Router();
+var csrf = require('csurf');
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+var csrfProtection = csrf();
+router.use(csrfProtection);
+
+
+router.get('/signup', function (req, res, next) {
+    res.render('users/signup', {csrfToken: req.csrfToken()});
 });
+
+router.post('/signup', function (req, res, next) {
+    res.redirect('/');
+});
+
 
 module.exports = router;

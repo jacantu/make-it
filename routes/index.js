@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
       var productGroup = [];
       var groupSize = 3;
 
-    /*Loops and groups objects in a row of three*/
+    /*Pushes objects into array in a row of three and separates them*/
       for (var i = 0; i < docs.length; i += groupSize) {
           productGroup.push(docs.slice(i, i + groupSize));
       }
