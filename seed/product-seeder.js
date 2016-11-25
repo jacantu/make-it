@@ -67,11 +67,11 @@ var products = [
     })
 ];
 
-/*Loops through products array*/
+/** Loops through products array */
 var done = 0;
 for (var i = 0; i < products.length; i++) {
 
-    /*Creates products collection in database*/
+    /** Creates products collection in database */
     products[i].save(function(err, result) {
         done++;
         if (done === products.length) {
@@ -80,7 +80,7 @@ for (var i = 0; i < products.length; i++) {
     });
 }
 
-/*Function to disconnect from database */
+/** Function to disconnect from database */
 function exit() {
     mongoose.disconnect();
 }
