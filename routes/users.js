@@ -34,6 +34,8 @@ router.use('/', notLoggedIn, function (req, res, next) {
 
 router.get('/signup', function (req, res, next) {
     var messages = req.flash('error');
+
+    /** Passes csrfToken,messages,hasErrors to shopping cart view */
     res.render('users/signup', {csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0});
 });
 
@@ -41,10 +43,12 @@ router.post('/signup', passport.authenticate('local.signup', {
     failureRedirect: '/users/signup',
     failureFlash: true
 }), function (req, res, next) {
+
+    /** Checks for old url in session */
     if (req.session.oldUrl) {
-        var oldUrl = req.session.oldUrl;
-        req.session.oldUrl = null;
-        res.redirect(oldUrl);
+        var oldUrl = req.session.oldUrl;/** Retreive old url */
+        req.session.oldUrl = null;      /** Clears old url */
+        res.redirect(oldUrl);           /** Redirects to old url */
     } else {
         res.redirect('/users/profile');
     }
@@ -59,10 +63,12 @@ router.post('/signin', passport.authenticate('local.signin', {
     failureRedirect: '/users/signin',
     failureFlash: true
 }), function (req, res, next) {
+
+    /** Checks for old url in session */
     if (req.session.oldUrl) {
-        var oldUrl = req.session.oldUrl;
-        req.session.oldUrl = null;
-        res.redirect(oldUrl);
+        var oldUrl = req.session.oldUrl;/** Retreive old url */
+        req.session.oldUrl = null;      /** Clears old url */
+        res.redirect(oldUrl);           /** Redirects to old url */
     } else {
         res.redirect('/users/profile');
     }
@@ -70,6 +76,7 @@ router.post('/signin', passport.authenticate('local.signin', {
 
 module.exports = router;
 
+/** Requires user to be logged in */
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
         return next();

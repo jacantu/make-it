@@ -10,3 +10,11 @@
     font-weight: bold;
     font-size: 16px;
 }
+
+.navbar{
+    background-color: #339CFF !important;
+}
+
+.navbar a{
+  color:white !important;
+}
