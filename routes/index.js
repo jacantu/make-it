@@ -97,6 +97,8 @@ router.get('/checkout', isLoggedIn, function(req, res, next) {
     /** Creates a new cart in session */
     var cart = new Cart(req.session.cart);
     var errMsg = req.flash('error')[0];
+
+    /** Passes total, errMsg, and noErr to checkout view */
     res.render('shop/checkout', {total: cart.totalPrice, errMsg: errMsg, noError: !errMsg});
 });
 
@@ -112,6 +114,7 @@ router.post('/checkout', isLoggedIn, function(req, res, next) {
         "sk_test_66p2gEDmFkXotQAcc46hKjAF"
     );
 
+    /** Creates a new charge */
     stripe.charges.create({
         amount: cart.totalPrice * 100,
         currency: "usd",
@@ -122,6 +125,8 @@ router.post('/checkout', isLoggedIn, function(req, res, next) {
             req.flash('error', err.message);
             return res.redirect('/checkout');
         }
+
+        /** Creates a new order */
         var order = new Order({
             user: req.user,
             cart: cart,
