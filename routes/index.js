@@ -3,6 +3,8 @@ var router = express.Router();
 var Product = require('../models/product');
 var Cart = require('../models/cart');
 var Order = require('../models/order');
+
+/** Finds passwords and secrets in the .env file */
 var dotenv = require('dotenv');
 dotenv.load();
 
