@@ -3,6 +3,8 @@ var router = express.Router();
 var Product = require('../models/product');
 var Cart = require('../models/cart');
 var Order = require('../models/order');
+var dotenv = require('dotenv');
+dotenv.load();
 
 
 /** GET home page. */
@@ -110,9 +112,7 @@ router.post('/checkout', isLoggedIn, function(req, res, next) {
     /** Creates a new cart in session */
     var cart = new Cart(req.session.cart);
 
-    var stripe = require("stripe")(
-        "sk_test_66p2gEDmFkXotQAcc46hKjAF"
-    );
+    var stripe = require("stripe")(process.env.SECRET_TEST_KEY);
 
     /** Creates a new charge */
     stripe.charges.create({
