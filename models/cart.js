@@ -3,7 +3,8 @@ module.exports = function Cart(oldCart) {
     /** Properties from last cart to new cart */
     this.items = oldCart.items || {};
     this.totalQty = oldCart.totalQty || 0;
-    this.totalPrice = Math.round(oldCart.totalPrice * Math.pow(10, 2))/Math.pow(10, 2) || 0;
+    this.totalPrice = oldCart.totalPrice  || 0;
+
 
     this.add = function(item, id) {
         var storedItem = this.items[id];
@@ -13,9 +14,10 @@ module.exports = function Cart(oldCart) {
             storedItem = this.items[id] = {item: item, qty: 0, price: 0};
         }
 
-        /** Individual item price and rounds it to two digits after point*/
+        /** Individual item price*/
         storedItem.qty++;
-        storedItem.price = Math.round((storedItem.item.price * storedItem.qty) * Math.pow(10, 2))/Math.pow(10, 2);
+        storedItem.price = storedItem.item.price * storedItem.qty;
+
 
         /** Updates total quantity and price */
         this.totalQty++;
@@ -38,7 +40,9 @@ module.exports = function Cart(oldCart) {
         this.items[id].price += this.items[id].item.price;
         this.totalQty++;
         this.totalPrice += this.items[id].item.price;
+
     };
+
     this.removeItem = function(id) {
         this.totalQty -= this.items[id].qty;
         this.totalPrice -= this.items[id].price;
